@@ -19,16 +19,15 @@ class Users
     vector<vector<string> > array;
     vector<string> v;
     unsigned long long lines=0;
-    string username,email,password;
+    string username="",email;
     public:
         ~Users();
         void data_csv_read(string);
-        void create_account(string,string,string);
+        void create_account(string,string,string,string);
         void login(string,string);
         void showdata();
         string getusername();
         string getemail();
-        string getpassword();
         friend string crypto();
 };
 
@@ -62,13 +61,22 @@ void Users::showdata()
         cout<<array[i][0]<<'\t'<<array[i][1]<<'\n';
 }
 
-void Users::create_account(string username, string email, string password)
+void Users::create_account(string file, string username, string email, string password)
 {
+    for(unsigned long long i=0;i<this->lines;++i)
+        if(array[i][0]==username&&array[i][1]==email&& array[i][2]==crypto(password))
+            return;
     this->v.push_back(username);
     this->v.push_back(email);
     this->v.push_back(crypto(password));
     this->array.push_back(this->v);
     ++this->lines;
+    this->username=username;
+    this->email=email;
+    ofstream out(file);
+    for(unsigned long long i=0;i<this->lines;++i)
+        out<<array[i][0]<<','<<array[i][1]<<','<<array[i][2]<<'\n';
+    out.close();
 }
 
 void Users::login(string email, string password)
@@ -78,7 +86,6 @@ void Users::login(string email, string password)
         {
             this->username=array[i][0];
             this->email=email;
-            this->password=password;
         }
 }
 
@@ -92,38 +99,36 @@ string Users::getemail()
     return this->email;
 }
 
-string Users::getpassword()
-{
-    return this->password;
-}
-
 //booking
 class Booking
 {
     vector<vector<string> > array;
     vector<string> v;
-    unsigned long long lines=0,index=0;
+    unsigned long long lines=0;
     string flying,departure,destination;
     public:
         ~Booking();
         void data_csv_read(string);
         void showdata();
-        string findFlying(unsigned long long);
+        void findFlying(string,string,string);
         string getflying();
         string getdeparture();
         string getdestination();
-        unsigned long long getindex();
 };
 
 Booking::~Booking()
 {}
 
-string Booking::findFlying(unsigned long long index)
+void Booking::findFlying(string flying, string departure, string destination)
 {
-    if(index<=this->lines&&this->lines)
-        return array[index][1];
-    else
-        return "";
+    this->flying=this->departure=this->destination="";
+    for(unsigned long long i=0;i<this->lines;++i)
+        if(array[i][0]==flying&&array[i][1]==departure&&array[i][2]==destination)
+        {
+            this->flying=flying;
+            this->departure=departure;
+            this->destination=destination;
+        }
 }
 
 void Booking::showdata()
@@ -168,41 +173,51 @@ string Booking::getdestination()
     return this->destination;
 }
 
-unsigned long long Booking::getindex()
-{
-    return this->index;
-}
-
 class Airlines
 {
     vector<vector<string> > array;
     vector<string> v;
-    unsigned long long lines=0,index=0;
-    string username,flying;
+    unsigned long long lines=0;
     public:
         ~Airlines();
         void data_csv_read(string);
         void showdata();
-        void addAirlines(string,string);
-        void deleteAirlines(string, unsigned long long); //deleteAirlines("file.csv", index)
+        void addAirlines(string,string,string,string,string);
+        void deleteAirlines(string,string,string,string,string);
         string getusername();
         string getflying();
-        unsigned long long getindex();
+        string getdeparture();
+        string getdestination();
 };
 
-void Airlines::addAirlines(string username, string flying)
+void Airlines::addAirlines(string file, string username, string flying, string departure, string destination)
 {
+    for(unsigned long long i=0;i<this->lines;++i)
+        if(array[i][0]==username&&array[i][1]==flying&&array[i][2]==departure&&array[i][3]==destination)
+            return;
     this->v.push_back(username);
     this->v.push_back(flying);
+    this->v.push_back(departure);
+    this->v.push_back(destination);
     this->array.push_back(this->v);
     ++this->lines;
+    ofstream out(file);
+    for(unsigned long long i=0;i<this->lines;++i)
+        out<<array[i][0]<<','<<array[i][1]<<','<<array[i][2]<<array[i][3]<<'\n';
+    out.close();
 }
 
-void Airlines::deleteAirlines(string file, unsigned long long index)
+void Airlines::deleteAirlines(string file, string username, string flying, string departure, string destination)
 {
-    if(this->lines&&index<=this->lines)
+    bool find=false;
+    for(unsigned long long i=0;i<this->lines&&!find;++i)
+        if(array[i][0]==username&&array[i][1]==flying&&array[i][2]==departure&&array[i][3]==destination)
+        {
+            array[i].pop_back();
+            find=true;
+        }
+    if(find)
     {
-        array[index].pop_back();
         --this->lines;
         ofstream out(file);
         for(unsigned long long i=0;i<this->lines;++i)
@@ -217,7 +232,7 @@ Airlines::~Airlines()
 void Airlines::showdata()
 {
     for(unsigned long long i=0;i<this->lines;++i)
-        cout<<array[i][0]<<'\t'<<array[i][1]<<'\n';
+        cout<<array[i][0]<<'\t'<<array[i][1]<<'\t'<<array[i][2]<<'\t'<<array[i][3]<<'\n';
 }
 
 void Airlines::data_csv_read(string file)
@@ -239,21 +254,6 @@ void Airlines::data_csv_read(string file)
         this->array.push_back(this->v);
     }
 	in.close();
-}
-
-string Airlines::getusername()
-{
-    return this->username;
-}
-
-string Airlines::getflying()
-{
-    return this->flying;
-}
-
-unsigned long long Airlines::getindex()
-{
-    return this->index;
 }
 
 #endif
