@@ -62,7 +62,6 @@ int main()
                     cout<<"Parola SLABA!\n";
                     goto Password;
                 }
-                cout<<username;
                 users.create_account("./data/users.csv",username,email,password);
                 break;
             case '2':

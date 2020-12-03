@@ -205,7 +205,7 @@ void Airlines::addAirlines(string file, string username, string flying, string d
     ++this->lines;
     ofstream out(file);
     for(unsigned long long i=0;i<this->lines;++i)
-        out<<array[i][0]<<','<<array[i][1]<<','<<array[i][2]<<array[i][3]<<'\n';
+        out<<array[i][0]<<','<<array[i][1]<<','<<array[i][2]<<','<<array[i][3]<<'\n';
     out.close();
 }
 
