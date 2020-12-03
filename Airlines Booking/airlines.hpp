@@ -1,4 +1,4 @@
-//Realized by Aleandro2000 on GitHub
+//Realized by Aleandro2000
 
 #ifndef AIRLINES_FILE
 #define AIRLINES_FILE

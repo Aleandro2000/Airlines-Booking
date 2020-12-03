@@ -1,4 +1,4 @@
-//Realized by Aleandro2000 on GitHub
+//Realized by Aleandro2000
 
 #include "airlines.hpp"
 
