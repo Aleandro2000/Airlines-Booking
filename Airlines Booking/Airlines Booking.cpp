@@ -62,6 +62,7 @@ int main()
                     cout<<"Parola SLABA!\n";
                     goto Password;
                 }
+                cout<<username;
                 users.create_account("./data/users.csv",username,email,password);
                 break;
             case '2':
@@ -116,45 +117,45 @@ int main()
                 {
                     if(admin!="admin"||adminPassword!="1234")
                         throw admin;
+                    else
+                    {
+                        system("@cls||clear");
+                        cout<<"1->Add airlines\n";
+                        cout<<"2->Delete Airlines\n";
+                        cout<<"Default key->Exit\n\n";
+                        cout<<"Option: ";
+                        cin>>options;
+                        if(options=='1')
+                        {
+                            system("@cls||clear");
+                            cout<<"Username: ";
+                            cin>>username;
+                            cout<<"Airlines: ";
+                            cin>>flying;
+                            cout<<"Departure: ";
+                            cin>>departure;
+                            cout<<"Destination: ";
+                            cin>>destination;
+                            airlines.addAirlines("./data/airlines.csv",username,flying,departure,destination);
+                        }
+                        else if(options=='2')
+                        {
+                            system("@cls||clear");
+                            cout<<"Username: ";
+                            cin>>username;
+                            cout<<"Airlines: ";
+                            cin>>flying;
+                            cout<<"Departure: ";
+                            cin>>departure;
+                            cout<<"Destination: ";
+                            cin>>destination;
+                            airlines.deleteAirlines("./data/airlines.csv",username,flying,departure,destination);
+                        }
+                    }
                 }
                 catch(string admin)
                 {
                     break;
-                }
-                catch(...)
-                {
-                    system("@cls||clear");
-                    cout<<"1->Add airlines\n";
-                    cout<<"2->Delete Airlines\n";
-                    cout<<"Default key->Exit\n\n";
-                    cout<<"Option: ";
-                    cin>>options;
-                    if(options=='1')
-                    {
-                        system("@cls||clear");
-                        cout<<"Username";
-                        cin>>username;
-                        cout<<"Airlines: ";
-                        cin>>flying;
-                        cout<<"Departure: ";
-                        cin>>departure;
-                        cout<<"Destination: ";
-                        cin>>destination;
-                        airlines.addAirlines("./data/airlines.csv",username,flying,departure,destination);
-                    }
-                    else if(options=='2')
-                    {
-                        system("@cls||clear");
-                        cout<<"Username";
-                        cin>>username;
-                        cout<<"Airlines: ";
-                        cin>>flying;
-                        cout<<"Departure: ";
-                        cin>>departure;
-                        cout<<"Destination: ";
-                        cin>>destination;
-                        airlines.deleteAirlines("./data/airlines.csv",username,flying,departure,destination);
-                    }
                 }
                 break;
             case '5':

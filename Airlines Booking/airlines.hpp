@@ -66,6 +66,7 @@ void Users::create_account(string file, string username, string email, string pa
     for(unsigned long long i=0;i<this->lines;++i)
         if(array[i][0]==username&&array[i][1]==email&& array[i][2]==crypto(password))
             return;
+    this->v.clear();
     this->v.push_back(username);
     this->v.push_back(email);
     this->v.push_back(crypto(password));
@@ -195,6 +196,7 @@ void Airlines::addAirlines(string file, string username, string flying, string d
     for(unsigned long long i=0;i<this->lines;++i)
         if(array[i][0]==username&&array[i][1]==flying&&array[i][2]==departure&&array[i][3]==destination)
             return;
+    this->v.clear();
     this->v.push_back(username);
     this->v.push_back(flying);
     this->v.push_back(departure);
